@@ -45,13 +45,52 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.white.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("10:00 AM"),
-                    Text("Q. 아침에 무엇을 드셨나요?"),
-                    Text("A. 오이냉국"),
-                  
+                    Text(
+                      "10:00 AM",
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Helvetica Neue',
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.80,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Q. 오늘은 누구를 만나셨나요?",
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Helvetica Neue',
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 0.80,
+                            ),
+                          ),
+                          Text(
+                            "A. 지수랑 예희",
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Helvetica Neue',
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 0.80,
+                            ),  
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -67,10 +106,51 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("10:00 AM"),
-                    Text("Q. 아침에 무엇을 드셨나요?"),
-                    Text("A. 오이냉국"),
-                  
+                    Text(
+                      "10:00 AM",
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Helvetica Neue',
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.80,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "Q. 오늘은 누구를 만나셨나요?",
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Helvetica Neue',
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 0.80,
+                            ),
+                          ),
+                          Text(
+                            "A. 지수랑 예희",
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Helvetica Neue',
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 0.80,
+                            ),  
+                          ),
+                        ],
+                      ),
+                    ),
+                    
                   ],
                 ),
               ),
@@ -86,10 +166,67 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("10:00 AM"),
-                    Text("Q. 아침에 무엇을 드셨나요?"),
-                    Text("A. 오이냉국"),
-                  
+                    Text(
+                      "10:00 AM",
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Helvetica Neue',
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.80,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 180,
+                            height: 30,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              "?",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 180,
+                            height: 30,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10)
+                              ),
+                            child: Text(
+                              "?",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
