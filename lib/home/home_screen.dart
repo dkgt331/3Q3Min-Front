@@ -7,15 +7,15 @@ class QnaBox extends StatelessWidget {
   final String question;
   final String answer;
 
-  QnaBox({required this.time, required this.question, required this.answer});
+  const QnaBox({Key? key, required this.time, required this.question, required this.answer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 150,
       width: 300,
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.6),
         borderRadius: BorderRadius.circular(10),
@@ -25,7 +25,7 @@ class QnaBox extends StatelessWidget {
         children: [
           Container(
             width: 280,
-            margin: EdgeInsets.fromLTRB(10, 3, 10, 3),
+            margin: const EdgeInsets.fromLTRB(10, 3, 10, 3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -36,7 +36,7 @@ class QnaBox extends StatelessWidget {
                       width: 245,
                       child: Text(
                         time,
-                        style: TextStyle(
+                        style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontFamily: 'Helvetica Neue',
@@ -45,7 +45,7 @@ class QnaBox extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.edit,
                       color: Colors.grey,
                       size: 20,
@@ -61,7 +61,7 @@ class QnaBox extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: 280,
             height: 100,
             child: Column(
@@ -70,7 +70,7 @@ class QnaBox extends StatelessWidget {
               children: [
                 Text(
                   "Q. $question",
-                  style: TextStyle(
+                  style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontFamily: 'Helvetica Neue',
@@ -80,7 +80,7 @@ class QnaBox extends StatelessWidget {
                 ),
                 Text(
                   "A. $answer",
-                  style: TextStyle(
+                  style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontFamily: 'Helvetica Neue',
@@ -103,7 +103,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
           image: AssetImage('assets/background1.png'),
@@ -112,7 +112,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Column(
@@ -122,25 +122,25 @@ class HomeScreen extends StatelessWidget {
                 width: 180,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: Color(0xff644312).withOpacity(0.4),
+                  color: const Color(0xff644312).withOpacity(0.4),
                   borderRadius: BorderRadius.circular(40),
                 ),
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   "2023. 06. 17.",
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
               ),
-              QnaBox(time: "10:00 AM", question: "아침에 무엇을 드셨나요?", answer: "오이냉국",),
-              QnaBox(time: "03:00 PM", question: "오늘은 누구를 만나셨나요?", answer: "지수랑 예희",),
+              const QnaBox(time: "10:00 AM", question: "아침에 무엇을 드셨나요?", answer: "오이냉국",),
+              const QnaBox(time: "03:00 PM", question: "오늘은 누구를 만나셨나요?", answer: "지수랑 예희",),
               Container(
                 height: 150,
                 width: 300,
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(10),
@@ -149,11 +149,11 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                      margin: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "10:00 AM",
                             style: TextStyle(
                             color: Colors.black,
@@ -173,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       height: 100,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,12 +183,12 @@ class HomeScreen extends StatelessWidget {
                             width: 200,
                             height: 30,
                             alignment: Alignment.center,
-                            margin: EdgeInsets.all(5),
+                            margin: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text(
+                            child: const Text(
                               "?",
                               style: TextStyle(
                                 color: Colors.white,
@@ -201,12 +201,12 @@ class HomeScreen extends StatelessWidget {
                             width: 200,
                             height: 30,
                             alignment: Alignment.center,
-                            margin: EdgeInsets.all(5),
+                            margin: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20)
                               ),
-                            child: Text(
+                            child: const Text(
                               "?",
                               style: TextStyle(
                                 color: Colors.white,
