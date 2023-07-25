@@ -13,6 +13,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
   int year = 0;
   int month = 0;
 
+  int selectedDay = 0;
+
   void setDateList(int setYear, int setMonth) {
     year = setYear;
     month = setMonth;
@@ -130,10 +132,101 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
+  Widget CalendarDetailWidget() {
+    return Opacity(
+        opacity: 0.90,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 36),
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(17), topRight: Radius.circular(17)),
+              color: Colors.white),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Expanded(child: SizedBox()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Opacity(
+                      opacity: 0.15,
+                      child: Container(
+                        height: 6,
+                        width: 90,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                            color: Color(0xFF000000)),
+                      ),
+                    ),
+                  ),
+                  const Expanded(child: SizedBox())
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  month.toString().length == 2
+                      ? "$year.$month.$selectedDay"
+                      : "$year.0$month.$selectedDay",
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.7),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
+                height: 0.5,
+                margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                color: Colors.black.withOpacity(0.2),
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              const Text("Q. 오늘 날씨가 어때요?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.80,
+                  )),
+              const SizedBox(
+                height: 24.0,
+              ),
+              const Text("Q. 가장 최근에 본 영화는?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.80,
+                  )),
+              const SizedBox(
+                height: 24.0,
+              ),
+              const Text("Q. 가장 여행 가고 싶은 곳은?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.80,
+                  ))
+            ],
+          ),
+        ));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     DateTime now = DateTime.now();
+    selectedDay = now.day;
     setDateList(now.year, now.month);
     super.initState();
   }
@@ -155,18 +248,28 @@ class _CalendarScreenState extends State<CalendarScreen> {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Row(
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    alignment: Alignment.center,
-                    color: Colors.purple,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      alignment: Alignment.center,
+                      color: Colors.purple,
+                    ),
+                  ],
+                ),
               ),
             ),
-            CalendarWidget()
+            const SizedBox(
+              height: 24,
+            ),
+            CalendarWidget(),
+            const SizedBox(
+              height: 28,
+            ),
+            Expanded(child: CalendarDetailWidget()),
           ],
         ),
       )),
