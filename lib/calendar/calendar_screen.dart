@@ -15,6 +15,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   int selectedDay = 0;
 
+  bool isDragUp = false;
+
   void setDateList(int setYear, int setMonth) {
     year = setYear;
     month = setMonth;
@@ -26,11 +28,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
     dateList = ["월", "화", "수", "목", "금", "토", "일"];
 
     for (int i = 0; i < firstDay; i++) {
-      dateList.add("empty");
+      dateList.add(-1);
     }
 
     for (int i = 1; i <= lastDate; i++) {
-      dateList.add(i.toString());
+      dateList.add(i);
     }
 
     setState(() {});
@@ -106,18 +108,29 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     childAspectRatio: 1 / 1,
                     physics: const NeverScrollableScrollPhysics(),
                     children: List.generate(dateList.length, (index) => index)
-                        .map((e) => SizedBox(
-                            width: 38,
-                            height: 38,
-                            child: Text(
-                              dateList[e] == "empty" ? "" : dateList[e],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )))
+                        .map((e) => GestureDetector(
+                              onTap: () {
+                                if (dateList[e] != -1) {
+                                  setState(() {
+                                    selectedDay = dateList[e];
+                                  });
+                                }
+                              },
+                              child: SizedBox(
+                                  width: 38,
+                                  height: 38,
+                                  child: Text(
+                                    dateList[e] == -1
+                                        ? ""
+                                        : dateList[e].toString(),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )),
+                            ))
                         .toList(),
                   ),
                 ),
@@ -146,16 +159,24 @@ class _CalendarScreenState extends State<CalendarScreen> {
               Row(
                 children: [
                   const Expanded(child: SizedBox()),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Opacity(
-                      opacity: 0.15,
-                      child: Container(
-                        height: 6,
-                        width: 90,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                            color: Color(0xFF000000)),
+                  GestureDetector(
+                    onVerticalDragEnd: (details) {
+                      setState(() {
+                        isDragUp = !isDragUp;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Opacity(
+                        opacity: 0.15,
+                        child: Container(
+                          height: 6,
+                          width: 90,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40)),
+                              color: Color(0xFF000000)),
+                        ),
                       ),
                     ),
                   ),
@@ -166,8 +187,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   month.toString().length == 2
-                      ? "$year.$month.$selectedDay"
-                      : "$year.0$month.$selectedDay",
+                      ? selectedDay.toString().length == 2
+                          ? "$year.$month.$selectedDay"
+                          : "$year.$month.0$selectedDay"
+                      : selectedDay.toString().length == 2
+                          ? "$year.0$month.$selectedDay"
+                          : "$year.0$month.0$selectedDay",
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.7),
                     fontSize: 20,
@@ -184,39 +209,166 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 30.0),
                 color: Colors.black.withOpacity(0.2),
               ),
-              const SizedBox(
-                height: 24.0,
-              ),
-              const Text("Q. 오늘 날씨가 어때요?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.80,
-                  )),
-              const SizedBox(
-                height: 24.0,
-              ),
-              const Text("Q. 가장 최근에 본 영화는?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.80,
-                  )),
-              const SizedBox(
-                height: 24.0,
-              ),
-              const Text("Q. 가장 여행 가고 싶은 곳은?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.80,
-                  ))
+              if (!isDragUp)
+                const SizedBox(
+                  height: 24.0,
+                ),
+              if (isDragUp)
+                Column(
+                  children: [
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                    ),
+                    const Text(
+                      "Q. 오늘은 누구를 만나셨나요?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 34,
+                    ),
+                    const Text.rich(TextSpan(children: [
+                      TextSpan(
+                        text: "A. ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "지수와 예희",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ])),
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                    ),
+                    // const Expanded(child: SizedBox()),
+                    Container(
+                      height: 0.5,
+                      margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                    ),
+                    // const Expanded(child: SizedBox()),
+                    const Text(
+                      "Q. 아침에 무엇을 드셨나요?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 34,
+                    ),
+                    const Text.rich(TextSpan(children: [
+                      TextSpan(
+                        text: "A. ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "오이냉국",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ])),
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                    ),
+                    // const Expanded(child: SizedBox()),
+                    Container(
+                      height: 0.5,
+                      margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                    ),
+                    // const Expanded(child: SizedBox()),
+                    const Text(
+                      "Q. 가장 여행가고 싶은 곳은?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 34,
+                    ),
+                    const Text.rich(TextSpan(children: [
+                      TextSpan(
+                        text: "A. ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "아이슬란드",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ])),
+                  ],
+                ),
+              if (!isDragUp)
+                const Column(
+                  children: [
+                    Text("Q. 오늘 날씨가 어때요?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        )),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    Text("Q. 가장 최근에 본 영화는?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        )),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    Text("Q. 가장 여행 가고 싶은 곳은?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        )),
+                  ],
+                )
             ],
           ),
         ));
@@ -265,7 +417,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             const SizedBox(
               height: 24,
             ),
-            CalendarWidget(),
+            if (!isDragUp) CalendarWidget(),
             const SizedBox(
               height: 28,
             ),
