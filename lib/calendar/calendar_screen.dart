@@ -165,6 +165,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 children: [
                   const Expanded(child: SizedBox()),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isDragUp = !isDragUp;
+                      });
+                    },
                     onVerticalDragEnd: (details) {
                       setState(() {
                         isDragUp = !isDragUp;
