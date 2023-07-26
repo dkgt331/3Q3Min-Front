@@ -62,15 +62,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      setDateList(year, month - 1);
-                    },
-                    child: Container(
-                      width: 16,
-                      height: 16,
-                      color: Colors.amber,
-                    ),
-                  ),
+                      onTap: () {
+                        setDateList(year, month - 1);
+                      },
+                      child: Image.asset(
+                        "assets/calendar_back_arrow.png",
+                        width: 16,
+                      )),
                   const Expanded(child: SizedBox()),
                   Text(
                     "${year.toString()}년 ${month.toString()}월",
@@ -82,15 +80,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                   const Expanded(child: SizedBox()),
                   GestureDetector(
-                    onTap: () {
-                      setDateList(year, month + 1);
-                    },
-                    child: Container(
-                      width: 16,
-                      height: 16,
-                      color: Colors.amber,
-                    ),
-                  )
+                      onTap: () {
+                        setDateList(year, month + 1);
+                      },
+                      child: Image.asset(
+                        "assets/calendar_next_arrow.png",
+                        width: 16,
+                      ))
                 ],
               ),
             ),
@@ -396,22 +392,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      color: Colors.purple,
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 8.0, left: 40),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Image.asset(
+                      "assets/back_arrow.png",
+                      width: 20,
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
             const SizedBox(
