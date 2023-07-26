@@ -112,9 +112,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   });
                                 }
                               },
-                              child: SizedBox(
-                                  width: 38,
-                                  height: 38,
+                              child: Container(
+                                  width: 36,
+                                  height: 36,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: dateList[e] == selectedDay
+                                          ? const BorderRadius.all(
+                                              Radius.circular(60))
+                                          : null,
+                                      color: dateList[e] == selectedDay
+                                          ? const Color(0xFFFFCE71)
+                                          : null),
                                   child: Text(
                                     dateList[e] == -1
                                         ? ""
@@ -386,7 +395,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Colors.blue,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/background_img.png"))),
         child: Column(
           children: [
             SizedBox(
