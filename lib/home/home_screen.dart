@@ -117,6 +117,7 @@ class HomeScreen extends StatelessWidget {
             height: double.infinity,
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 180,
@@ -221,52 +222,62 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const SettingScreen(),
+              SizedBox(
+                width: 260,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const SettingScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        alignment: Alignment.center,
+                        child: Image(
+                          image: AssetImage('assets/setting_button.png'),
+                          color: Colors.lightBlue,
+                          width: 40,
+                          height: 40,
+                        ),
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 30,
-                  alignment: Alignment.center,
-                  color: Colors.purple,
-                  child: const Text(
-                    "설정으로 이동",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                    SizedBox(
+                      width: 45,
+                      height: 45,
+                      child: Image(
+                        image: AssetImage('assets/home_button.png'),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CalendarScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        alignment: Alignment.center,
+                        child: Image(
+                          image:AssetImage('assets/calendar_button.png'),
+                          color: Colors.lightBlue,
+                          width: 40,
+                          height: 40,
+                        )
+                      ),
+                    )
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const CalendarScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 30,
-                  alignment: Alignment.center,
-                  color: Colors.purple,
-                  child: const Text(
-                    "캘린더로 이동",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              )
             ],
             ),  
           ),
