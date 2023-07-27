@@ -78,21 +78,155 @@ class QnaBox extends StatelessWidget {
                   letterSpacing: 0.80,
                   ),
                 ),
-                Text(
-                  "A. $answer",
-                  style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Helvetica Neue',
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 0.80,
-                  ),  
+                Row(
+                  children: [
+                    const Text(
+                      "A. ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: 'Helvetica Neue',
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 0.80,
+                      ),
+                    ),
+                    Text(
+                      answer,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: 'Helvetica Neue',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.80,
+                      ),  
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class DayView extends StatelessWidget {
+  final String date;
+
+  const DayView({Key? key, required this.date}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 180,
+          height: 44,
+          decoration: BoxDecoration(
+            color: const Color(0xff644312).withOpacity(0.4),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+          alignment: Alignment.center,
+          child: Text(
+            date,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        const QnaBox(time: "10:00 AM", question: "아침에 무엇을 드셨나요?", answer: "오이냉국",),
+        const QnaBox(time: "03:00 PM", question: "오늘은 누구를 만나셨나요?", answer: "지수랑 예희",),
+        Container(
+          height: 150,
+          width: 300,
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.6),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "10:00 AM",
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Helvetica Neue',
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.80,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(10),
+                height: 100,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 30,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        "?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      height: 30,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20)
+                        ),
+                      child: const Text(
+                        "?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -116,169 +250,75 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 180,
-                height: 44,
-                decoration: BoxDecoration(
-                  color: const Color(0xff644312).withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                alignment: Alignment.center,
-                child: const Text(
-                  "2023. 06. 17.",
-                  style: TextStyle(
-                    color: Colors.white,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height/4*3,
+                  width: MediaQuery.of(context).size.width,
+                  child: PageView(
+                    controller: PageController(),
+                    children: [
+                      DayView(date: "2023. 06. 15.",),
+                      DayView(date: "2023. 06. 16.",),
+                      DayView(date: "2023. 06. 17.",),
+                      DayView(date: "2023. 06. 18.",),
+                    ],
                   ),
                 ),
-              ),
-              const QnaBox(time: "10:00 AM", question: "아침에 무엇을 드셨나요?", answer: "오이냉국",),
-              const QnaBox(time: "03:00 PM", question: "오늘은 누구를 만나셨나요?", answer: "지수랑 예희",),
-              Container(
-                height: 150,
-                width: 300,
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "10:00 AM",
-                            style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Helvetica Neue',
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 0.80,
+                Container(
+                  width: 300,
+                  margin: EdgeInsets.fromLTRB(0, 35, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SettingScreen(),
                             ),
+                          );
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Image(
+                            image: AssetImage('assets/setting_button.png'),
+                            color: Colors.lightBlue,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      height: 100,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 200,
-                            height: 30,
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Text(
-                              "?",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 200,
-                            height: 30,
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(20)
-                              ),
-                            child: const Text(
-                              "?",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 260,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const SettingScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        alignment: Alignment.center,
-                        child: Image(
-                          image: AssetImage('assets/setting_button.png'),
-                          color: Colors.lightBlue,
-                          width: 40,
-                          height: 40,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 45,
-                      height: 45,
-                      child: Image(
-                        image: AssetImage('assets/home_button.png'),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const CalendarScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        alignment: Alignment.center,
+                      SizedBox(
+                        width: 90,
+                        height: 90,
                         child: Image(
-                          image:AssetImage('assets/calendar_button.png'),
-                          color: Colors.lightBlue,
-                          width: 40,
-                          height: 40,
-                        )
+                          image: AssetImage('assets/home_button.png'),
+                        ),
                       ),
-                    )
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CalendarScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Image(
+                            image:AssetImage('assets/calendar_button.png'),
+                            color: Colors.lightBlue,
+                          )
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
             ),  
           ),
         ),

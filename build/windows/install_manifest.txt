@@ -4,6 +4,9 @@ D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/flutter_localization_
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/AssetManifest.bin
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/assets/background1.png
+D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/assets/calendar_button.png
+D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/assets/home_button.png
+D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/assets/setting_button.png
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
 D:/Flutter Project/3Q3Min-Front/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
