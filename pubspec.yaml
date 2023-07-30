@@ -54,6 +54,10 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+fonts:
+  -family: Helvetica Neue
+  fonts:
+    - asset: assets/fonts/Helvetica Neue Regular.otf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

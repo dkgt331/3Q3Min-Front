@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
+import 'package:application_3q3min/main.dart';
 import 'package:application_3q3min/setting/announcement.dart';
 import 'package:application_3q3min/setting/personal_setting.dart';
-import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -12,13 +14,14 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreen extends State<SettingScreen> {
-  var _isSwitched = false;
+  var _isSwitched = MyApp.themeNotifier.value == ThemeMode.light ? false : true;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
+      theme: CustomThemeData.light,
+      darkTheme: CustomThemeData.dark,
+      themeMode: MyApp.themeNotifier.value,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,18 +54,14 @@ class _SettingScreen extends State<SettingScreen> {
                       TextSpan(
                           text: '스큐스', // 이름 받아오기
                           style: TextStyle(
-                            color: Colors.black,
                             fontSize: 20,
-                            fontFamily: 'Helvetica Neue',
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1,
                           )),
                       TextSpan(
                           text: '님',
                           style: TextStyle(
-                            color: Colors.black,
                             fontSize: 20,
-                            fontFamily: 'Helvetica Neue',
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1,
                           )),
@@ -91,7 +90,9 @@ class _SettingScreen extends State<SettingScreen> {
                 height: 142,
                 margin: const EdgeInsets.fromLTRB(32, 28, 32, 0),
                 decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: _isSwitched
+                        ? const Color(0xFF575F70)
+                        : Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(17),
                     )),
@@ -118,19 +119,14 @@ class _SettingScreen extends State<SettingScreen> {
                                 width: 220,
                                 height: 20,
                                 margin: const EdgeInsets.only(left: 23),
-                                child: const Opacity(
-                                  opacity: 0.7,
-                                  child: Text(
+                                child: const Text(
                                     '개인설정',
                                     style: TextStyle(
-                                      color: Colors.black,
                                       fontSize: 16,
-                                      fontFamily: 'Helvetica Neue',
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 0.80,
                                     ),
                                   ),
-                                ),
                               ),
                             ),
                             Container(
@@ -165,17 +161,12 @@ class _SettingScreen extends State<SettingScreen> {
                                 width: 220,
                                 height: 20,
                                 margin: const EdgeInsets.only(left: 23),
-                                child: const Opacity(
-                                  opacity: 0.7,
-                                  child: Text(
-                                    '공지사항',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontFamily: 'Helvetica Neue',
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 0.80,
-                                    ),
+                                child: const Text(
+                                  '공지사항',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.80,
                                   ),
                                 ),
                               ),
@@ -198,7 +189,7 @@ class _SettingScreen extends State<SettingScreen> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: const EdgeInsets.only(left:  47, bottom: 64),
+                  margin: const EdgeInsets.only(left: 47, bottom: 64),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -209,16 +200,12 @@ class _SettingScreen extends State<SettingScreen> {
                             onPressed: () {
                               //로그아웃 기능 구현
                             },
-                            child: const Opacity(
-                              opacity: 0.7,
-                              child: Text(
-                                '로그아웃',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            child: const Text(
+                              '로그아웃',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
                               ),
                             )),
                       ),
@@ -230,6 +217,9 @@ class _SettingScreen extends State<SettingScreen> {
                           onChanged: (value) {
                             setState(() {
                               _isSwitched = value;
+                              MyApp.themeNotifier.value = _isSwitched
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light;
                             });
                           },
                         ),
@@ -250,9 +240,7 @@ class CustomSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const CustomSwitch({super.key,
-    required this.value,
-    required this.onChanged});
+  const CustomSwitch({super.key, required this.value, required this.onChanged});
 
   @override
   _CustomSwitchState createState() => _CustomSwitchState();
@@ -266,11 +254,13 @@ class _CustomSwitchState extends State<CustomSwitch>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 60));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 60));
     _circleAnimation = AlignmentTween(
-        begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-        end: widget.value ? Alignment.centerLeft :Alignment.centerRight).animate(CurvedAnimation(
-        parent: _animationController, curve: Curves.linear));
+            begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
+            end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
+        .animate(CurvedAnimation(
+            parent: _animationController, curve: Curves.linear));
   }
 
   @override
@@ -285,23 +275,32 @@ class _CustomSwitchState extends State<CustomSwitch>
             } else {
               _animationController.forward();
             }
-            widget.value == false ? widget.onChanged(true) : widget.onChanged(false);
+            widget.value == false
+                ? widget.onChanged(true)
+                : widget.onChanged(false);
           },
           child: Container(
             width: 77,
             height: 36,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(1000),
-              color: _circleAnimation.value ==  Alignment.centerLeft ? const Color(0xFF88B3F2) : const Color(0xFF5481CF)),
-            child: Padding(padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 5.0, left: 5.0),
-              child:  Container(
-                alignment: widget.value ? Alignment.centerRight : Alignment.centerLeft,
+                borderRadius: BorderRadius.circular(1000),
+                color: _circleAnimation.value == Alignment.centerLeft
+                    ? const Color(0xFF88B3F2)
+                    : const Color(0xFF5481CF)),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 4.0, bottom: 4.0, right: 5.0, left: 5.0),
+              child: Container(
+                alignment:
+                    widget.value ? Alignment.centerRight : Alignment.centerLeft,
                 child: Container(
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _circleAnimation.value ==  Alignment.centerLeft ? const Color(0xFFFFF071) : const Color(0xFFE5E1BC),
+                    color: _circleAnimation.value == Alignment.centerLeft
+                        ? const Color(0xFFFFF071)
+                        : const Color(0xFFE5E1BC),
                   ),
                 ),
               ),

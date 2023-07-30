@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:application_3q3min/setting/suggest.dart';
+import 'package:application_3q3min/main.dart';
 
 class Announcement extends StatelessWidget {
   const Announcement({super.key});
@@ -6,6 +8,9 @@ class Announcement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: CustomThemeData.light,
+      darkTheme: CustomThemeData.dark,
+      themeMode: MyApp.themeNotifier.value,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,17 +31,24 @@ class Announcement extends StatelessWidget {
                   ),
                   const Align(
                     alignment: Alignment.center,
-                    child: Opacity(
-                      opacity: 0.7,
-                      child: Text(
-                        '공지사항',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: 'Helvetica Neue',
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1,
-                        ),
+                    child: Text(
+                      '공지사항',
+                      style: TextStyle(
+                        fontSize: 20,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 47),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const Suggest()));
+                          },
+                        icon: Image.asset('assets/suggest.png'),
                       ),
                     ),
                   )
@@ -81,17 +93,11 @@ class ItemBox extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 62),
-            child: Opacity(
-              opacity: 0.7,
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontFamily: 'Helvetica Neue',
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.70,
-                ),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                letterSpacing: 0.70,
               ),
             ),
           ),
@@ -101,7 +107,9 @@ class ItemBox extends StatelessWidget {
               width: 330,
               height: height,
               decoration: ShapeDecoration(
-                color: Colors.white,
+                color: MyApp.themeNotifier.value == ThemeMode.dark
+                    ? const Color(0xFF575F70)
+                    : Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17),
                 ),
