@@ -1,0 +1,10 @@
+^D:\FLUTTER PROJECT\3Q3MIN-FRONT\BUILD\WINDOWS\CMAKEFILES\2D84C82428A20C2B23D8B06E13FEA4BA\GENERATE.STAMP.RULE
+setlocal
+D:\VisualStudio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe "-SD:/Flutter Project/3Q3Min-Front/windows" "-BD:/Flutter Project/3Q3Min-Front/build/windows" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/Flutter Project/3Q3Min-Front/build/windows/application_3q3min.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
