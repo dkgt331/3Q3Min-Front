@@ -56,6 +56,63 @@ class Suggest extends StatelessWidget {
                 ),
               ),
             ),
+            Center(
+              child: Container(
+                  margin: const EdgeInsets.only(top: 33),
+                  width: 330,
+                  height: 344,
+                  decoration: ShapeDecoration(
+                    color: MyApp.themeNotifier.value == ThemeMode.dark
+                        ? const Color(0xFF575F70)
+                        : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          child: IconButton(
+                              onPressed: () {}, // 건의사항 보내기
+                              icon: Image.asset('assets/check.png')),
+                        ),
+                      ),
+                      Container(
+                        width: 330,
+                        decoration: const ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFF9F9F9),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 28),
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: TextField(
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.60,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: '최소 10자 이상의 문자를 입력해주세요.',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+            )
           ],
         ),
       ),
