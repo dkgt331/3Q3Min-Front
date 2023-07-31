@@ -7,7 +7,12 @@ class QnaBox extends StatelessWidget {
   final String question;
   final String answer;
 
-  const QnaBox({Key? key, required this.time, required this.question, required this.answer}) : super(key: key);
+  const QnaBox(
+      {Key? key,
+      required this.time,
+      required this.question,
+      required this.answer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +42,11 @@ class QnaBox extends StatelessWidget {
                       child: Text(
                         time,
                         style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Helvetica Neue',
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 0.80,
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Helvetica Neue',
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.80,
                         ),
                       ),
                     ),
@@ -54,7 +59,9 @@ class QnaBox extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                    border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.2))),
                   ),
                 ),
               ],
@@ -71,11 +78,11 @@ class QnaBox extends StatelessWidget {
                 Text(
                   "Q. $question",
                   style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Helvetica Neue',
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 0.80,
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Helvetica Neue',
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.80,
                   ),
                 ),
                 Row(
@@ -98,7 +105,7 @@ class QnaBox extends StatelessWidget {
                         fontFamily: 'Helvetica Neue',
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.80,
-                      ),  
+                      ),
                     ),
                   ],
                 ),
@@ -133,14 +140,22 @@ class DayView extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             date,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
             ),
           ),
         ),
-        const QnaBox(time: "10:00 AM", question: "아침에 무엇을 드셨나요?", answer: "오이냉국",),
-        const QnaBox(time: "03:00 PM", question: "오늘은 누구를 만나셨나요?", answer: "지수랑 예희",),
+        const QnaBox(
+          time: "10:00 AM",
+          question: "아침에 무엇을 드셨나요?",
+          answer: "오이냉국",
+        ),
+        const QnaBox(
+          time: "03:00 PM",
+          question: "오늘은 누구를 만나셨나요?",
+          answer: "지수랑 예희",
+        ),
         Container(
           height: 150,
           width: 300,
@@ -161,16 +176,18 @@ class DayView extends StatelessWidget {
                     const Text(
                       "10:00 AM",
                       style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Helvetica Neue',
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 0.80,
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: 'Helvetica Neue',
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 0.80,
                       ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Colors.black.withOpacity(0.2))),
                       ),
                     ),
                   ],
@@ -208,9 +225,8 @@ class DayView extends StatelessWidget {
                       alignment: Alignment.center,
                       margin: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(20)
-                        ),
+                          color: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20)),
                       child: const Text(
                         "?",
                         style: TextStyle(
@@ -240,7 +256,7 @@ class HomeScreen extends StatelessWidget {
       decoration: const BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/background1.png'),
+          image: AssetImage('assets/background_img.png'),
         ),
       ),
       child: Scaffold(
@@ -253,21 +269,29 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height/4*3,
+                  height: MediaQuery.of(context).size.height / 4 * 3,
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
                     controller: PageController(),
-                    children: [
-                      DayView(date: "2023. 06. 15.",),
-                      DayView(date: "2023. 06. 16.",),
-                      DayView(date: "2023. 06. 17.",),
-                      DayView(date: "2023. 06. 18.",),
+                    children: const [
+                      DayView(
+                        date: "2023. 06. 15.",
+                      ),
+                      DayView(
+                        date: "2023. 06. 16.",
+                      ),
+                      DayView(
+                        date: "2023. 06. 17.",
+                      ),
+                      DayView(
+                        date: "2023. 06. 18.",
+                      ),
                     ],
                   ),
                 ),
                 Container(
                   width: 300,
-                  margin: EdgeInsets.fromLTRB(0, 35, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,13 +308,13 @@ class HomeScreen extends StatelessWidget {
                           width: 50,
                           height: 50,
                           alignment: Alignment.center,
-                          child: Image(
+                          child: const Image(
                             image: AssetImage('assets/setting_button.png'),
                             color: Colors.lightBlue,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 90,
                         height: 90,
                         child: Image(
@@ -306,20 +330,19 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          width: 50,
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Image(
-                            image:AssetImage('assets/calendar_button.png'),
-                            color: Colors.lightBlue,
-                          )
-                        ),
+                            width: 50,
+                            height: 50,
+                            alignment: Alignment.center,
+                            child: const Image(
+                              image: AssetImage('assets/calendar_button.png'),
+                              color: Colors.lightBlue,
+                            )),
                       )
                     ],
                   ),
                 ),
               ],
-            ),  
+            ),
           ),
         ),
       ),
