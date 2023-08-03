@@ -83,12 +83,14 @@ class Suggest extends StatelessWidget {
                       ),
                       Container(
                         width: 330,
-                        decoration: const ShapeDecoration(
+                        decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               width: 1,
                               strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Color(0xFFF9F9F9),
+                              color: MyApp.themeNotifier.value == ThemeMode.dark
+                                  ? const Color(0xFF61697C)
+                                  : const Color(0xFFF9F9F9),
                             ),
                           ),
                         ),

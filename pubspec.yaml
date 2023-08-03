@@ -39,6 +39,7 @@ dependencies:
   flutter_localization: ^0.1.12
   intl: ^0.18.0
   stock: ^1.0.1
+  animated_flip_counter: ^0.2.6
 
 dev_dependencies:
   flutter_driver:
