@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:application_3q3min/main.dart';
 
-class PersonalSetting extends StatelessWidget {
+class PersonalSetting extends StatefulWidget {
   const PersonalSetting({super.key});
 
+  @override
+  State<PersonalSetting> createState() => _PersonalSettingState();
+}
+
+class _PersonalSettingState extends State<PersonalSetting> {
+  bool _isShortAnswer = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -150,6 +156,19 @@ class PersonalSetting extends StatelessWidget {
                           borderRadius: BorderRadius.circular(17),
                         ),
                       ),
+                      child: Center(
+                        child: CustomSwitch(
+                          value: _isShortAnswer,
+                          onChanged: (value) {
+                            setState(() {
+                              _isShortAnswer = value;
+                              // MyApp.themeNotifier.value = _isShortAnswer
+                              //     ? ThemeMode.dark
+                              //     : ThemeMode.light;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -197,8 +216,7 @@ class _CounterState extends State<Counter> {
           ),
         ),
         IconButton(
-            onPressed: _incrementCounter,
-            icon: Image.asset('assets/plus.png')),
+            onPressed: _incrementCounter, icon: Image.asset('assets/plus.png')),
       ],
     );
   }
@@ -225,10 +243,10 @@ class _CustomSwitchState extends State<CustomSwitch>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 60));
     _circleAnimation = AlignmentTween(
-        begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-        end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
+            begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
+            end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
         .animate(CurvedAnimation(
-        parent: _animationController, curve: Curves.linear));
+            parent: _animationController, curve: Curves.linear));
   }
 
   @override
@@ -248,30 +266,78 @@ class _CustomSwitchState extends State<CustomSwitch>
                 : widget.onChanged(false);
           },
           child: Container(
-            width: 77,
-            height: 36,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(1000),
-                color: _circleAnimation.value == Alignment.centerLeft
-                    ? const Color(0xFF88B3F2)
-                    : const Color(0xFF5481CF)),
+            width: 281,
+            height: 53,
+            decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17)),
+                color: MyApp.themeNotifier.value == ThemeMode.light
+                    ? const Color(0xFFCECECE)
+                    : Colors.white.withOpacity(0.5)),
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 4.0, bottom: 4.0, right: 5.0, left: 5.0),
-              child: Container(
-                alignment:
-                widget.value ? Alignment.centerRight : Alignment.centerLeft,
-                child: Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _circleAnimation.value == Alignment.centerLeft
-                        ? const Color(0xFFFFF071)
-                        : const Color(0xFFE5E1BC),
+                  top: 6.0, bottom: 6.0, right: 7.0, left: 7.0),
+              child: Stack(children: [
+                Container(
+                  alignment: widget.value
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Container(
+                    width: 133,
+                    height: 41,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13)),
+                      color: MyApp.themeNotifier.value == ThemeMode.light
+                          ? const Color(0xFFF9F9F9)
+                          : const Color(0xFF6A7386),
+                    ),
                   ),
                 ),
-              ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 130,
+                        child: Center(
+                            child: Text('선택형',
+                                style: TextStyle(
+                                  color: MyApp.themeNotifier.value ==
+                                          ThemeMode.light
+                                      ? _circleAnimation.value ==
+                                              Alignment.centerLeft
+                                          ? const Color(0xFF757575)
+                                          : const Color(0xFFF9F9F9)
+                                      : _circleAnimation.value ==
+                                              Alignment.centerLeft
+                                          ? Colors.white.withOpacity(0.9)
+                                          : Colors.black.withOpacity(0.5),
+                                  fontSize: 15,
+                                ))),
+                      ),
+                      SizedBox(
+                        width: 130,
+                        child: Center(
+                            child: Text('단답형',
+                                style: TextStyle(
+                                  color: MyApp.themeNotifier.value ==
+                                          ThemeMode.light
+                                      ? _circleAnimation.value ==
+                                              Alignment.centerLeft
+                                          ? const Color(0xFFF9F9F9)
+                                          : const Color(0xFF757575)
+                                      : _circleAnimation.value ==
+                                              Alignment.centerLeft
+                                          ? Colors.black.withOpacity(0.5)
+                                          : Colors.white.withOpacity(0.9),
+                                  fontSize: 15,
+                                ))),
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
             ),
           ),
         );
