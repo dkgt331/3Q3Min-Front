@@ -290,7 +290,8 @@ class _CustomSwitchState extends State<CustomSwitch>
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 4.0, bottom: 4.0, right: 5.0, left: 5.0),
-              child: Container(
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 100),
                 alignment:
                     widget.value ? Alignment.centerRight : Alignment.centerLeft,
                 child: Container(

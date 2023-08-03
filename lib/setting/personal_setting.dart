@@ -241,7 +241,7 @@ class _CustomSwitchState extends State<CustomSwitch>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 60));
+        vsync: this, duration: const Duration(milliseconds: 100));
     _circleAnimation = AlignmentTween(
             begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
             end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
@@ -278,7 +278,8 @@ class _CustomSwitchState extends State<CustomSwitch>
               padding: const EdgeInsets.only(
                   top: 6.0, bottom: 6.0, right: 7.0, left: 7.0),
               child: Stack(children: [
-                Container(
+                AnimatedAlign(
+                  duration: const Duration(milliseconds: 100),
                   alignment: widget.value
                       ? Alignment.centerRight
                       : Alignment.centerLeft,
