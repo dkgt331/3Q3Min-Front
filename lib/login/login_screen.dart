@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool loginSuccess = false;
 
-  void googleLogin() async {
+  Future<void> googleLogin() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -28,8 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (loginSuccess) {
-      Navigator.pushAndRemoveUntil(
-          context,
+      Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const HomeScreen()),
           (route) => false);
     }
