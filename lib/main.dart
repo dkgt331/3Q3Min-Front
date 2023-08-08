@@ -1,21 +1,30 @@
-import 'package:application_3q3min/home/home_screen.dart';
-import 'package:application_3q3min/login/login_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'home/home_screen.dart';
+import 'login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.light);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  bool isLoggedIn = false;
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: themeNotifier,
+      valueListenable: MyApp.themeNotifier,
       builder: (_, ThemeMode currentMode, __) {
         return MaterialApp(
           title: 'Flutter Demo',
@@ -25,8 +34,7 @@ class MyApp extends StatelessWidget {
           ),
           darkTheme: ThemeData.dark(),
           themeMode: currentMode,
-          home: const LoginScreen(),
-          // home: const HomeScreen(),
+          home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
         );
       },
     );

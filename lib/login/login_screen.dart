@@ -1,4 +1,6 @@
+import 'package:application_3q3min/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,6 +10,31 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool loginSuccess = false;
+
+  void googleLogin() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+
+    // backend에 보내주기
+    print(googleAuth.accessToken);
+    print(googleAuth.idToken);
+
+    setState(() {
+      loginSuccess = true;
+    });
+
+    if (loginSuccess) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          (route) => false);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -115,39 +142,45 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const Expanded(child: SizedBox()),
-                    Container(
-                      height: 46,
-                      width: 204,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.95),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(14)),
-                          border: Border.all(color: Colors.white, width: 0.5)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/google_login.png",
-                            width: 20,
-                          ),
-                          const SizedBox(
-                            width: 18,
-                          ),
-                          Image.asset(
-                            "assets/google_login_text.png",
-                            height: 14,
-                          ),
-                          const Text(
-                            " 계정으로 가입",
-                            style: TextStyle(
-                              color: Color(0xFF888E9D),
-                              fontSize: 10,
-                              fontFamily: 'Helvetica Neue',
-                              fontWeight: FontWeight.w700,
+                    GestureDetector(
+                      onTap: () {
+                        googleLogin();
+                      },
+                      child: Container(
+                        height: 46,
+                        width: 204,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(14)),
+                            border:
+                                Border.all(color: Colors.white, width: 0.5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/google_login.png",
+                              width: 20,
                             ),
-                          )
-                        ],
+                            const SizedBox(
+                              width: 18,
+                            ),
+                            Image.asset(
+                              "assets/google_login_text.png",
+                              height: 14,
+                            ),
+                            const Text(
+                              " 계정으로 가입",
+                              style: TextStyle(
+                                color: Color(0xFF888E9D),
+                                fontSize: 10,
+                                fontFamily: 'Helvetica Neue',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     const Expanded(child: SizedBox()),
