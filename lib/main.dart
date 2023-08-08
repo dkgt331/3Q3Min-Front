@@ -1,5 +1,8 @@
 import 'package:application_3q3min/home/home_screen.dart';
+import 'package:application_3q3min/splash/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +27,14 @@ class MyApp extends StatelessWidget {
             ),
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
-            home: const HomeScreen(),
+            home: AnimatedSplashScreen(
+              curve: Cubic(1,1,1,1),
+              duration: 6000,
+              splash: SplashTweenAnimationBuilder(),
+              nextScreen: HomeScreen(),
+              backgroundColor: Color(0xff8EBBFF),
+            ),
+            // const HomeScreen(),
           );
         },
       );
