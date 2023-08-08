@@ -13,7 +13,7 @@ class _SplashTweenAnimationBuilderState extends State<SplashTweenAnimationBuilde
   double targetAngle = 00.0;
   double targetSize = 40;
   late Timer _timer;
-  double _milliseconds = 0.0;
+  double _milliseconds = -200;
 
   @override
   void initState() {
@@ -35,12 +35,12 @@ class _SplashTweenAnimationBuilderState extends State<SplashTweenAnimationBuilde
       body: Center(
         child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: targetAngle),
-          duration: Duration(milliseconds: 700),
+          duration: Duration(milliseconds: 500),
           builder: (BuildContext context, double angle, Widget? child) {
             return TweenAnimationBuilder(
               tween: Tween<double>(begin: 40, end: targetSize),
               curve: Curves.easeInOutBack,
-              duration: Duration(milliseconds: 700),
+              duration: Duration(milliseconds: 800),
               builder: (BuildContext context, double size, Widget? child) {
                 return Transform.scale(
                   scale: size,
@@ -64,7 +64,7 @@ class _SplashTweenAnimationBuilderState extends State<SplashTweenAnimationBuilde
     if (_milliseconds <= 6000) {
       setState(() {
         if(_milliseconds == 500) {
-          targetSize = 1.5;
+          targetSize = 2;
         }
         if (_milliseconds % 2000 == 0) {
           targetAngle += 90;
