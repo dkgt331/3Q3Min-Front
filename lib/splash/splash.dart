@@ -32,29 +32,37 @@ class _SplashTweenAnimationBuilderState extends State<SplashTweenAnimationBuilde
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: targetAngle),
-          duration: Duration(milliseconds: 500),
-          builder: (BuildContext context, double angle, Widget? child) {
-            return TweenAnimationBuilder(
-              tween: Tween<double>(begin: 40, end: targetSize),
-              curve: Curves.easeInOutBack,
-              duration: Duration(milliseconds: 800),
-              builder: (BuildContext context, double size, Widget? child) {
-                return Transform.scale(
-                  scale: size,
-                  child: Transform.rotate(
-                    angle: angle * math.pi / 180,
-                    child: Image.asset(
-                      'assets/home_button.png',
-                      alignment: Alignment.center,
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/splash_screen.png')
+          )
+        ),
+        child: Center(
+          child: TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0, end: targetAngle),
+            duration: Duration(milliseconds: 500),
+            builder: (BuildContext context, double angle, Widget? child) {
+              return TweenAnimationBuilder(
+                tween: Tween<double>(begin: 40, end: targetSize),
+                curve: Curves.easeInOutBack,
+                duration: Duration(milliseconds: 800),
+                builder: (BuildContext context, double size, Widget? child) {
+                  return Transform.scale(
+                    scale: size,
+                    child: Transform.rotate(
+                      angle: angle * math.pi / 180,
+                      child: Image.asset(
+                        'assets/home_button.png',
+                        alignment: Alignment.center,
+                      ),
                     ),
-                  ),
-                );
-              }  
-            );
-          },
+                  );
+                }  
+              );
+            },
+          ),
         ),
       ),
     );
@@ -64,7 +72,7 @@ class _SplashTweenAnimationBuilderState extends State<SplashTweenAnimationBuilde
     if (_milliseconds <= 6000) {
       setState(() {
         if(_milliseconds == 500) {
-          targetSize = 2;
+          targetSize = 1.8;
         }
         if (_milliseconds % 2000 == 0) {
           targetAngle += 90;
