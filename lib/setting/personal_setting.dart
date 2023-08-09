@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:bottom_picker/bottom_picker.dart';
 import 'package:application_3q3min/main.dart';
 
 class PersonalSetting extends StatefulWidget {
@@ -11,8 +12,47 @@ class PersonalSetting extends StatefulWidget {
 
 class _PersonalSettingState extends State<PersonalSetting> {
   bool _isShortAnswer = false;
+  void _incrementCounter() {
+    setState(() {
+      MyApp.qNum.value < 10 ? MyApp.qNum.value++ : MyApp.qNum.value;
+      MyApp.qNum.value <= 10
+          ? listItems.add(setTime(MyApp.qNum.value))
+          : listItems;
+      MyApp.qNum.value <= 10 ? _isTouch ? _height = 67 + 45 * MyApp.qNum.value : _height : _height;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      MyApp.qNum.value > 3 ? MyApp.qNum.value-- : MyApp.qNum.value;
+      MyApp.qNum.value >= 3 ? listItems.removeLast() : listItems;
+      MyApp.qNum.value >= 3 ? _isTouch ? _height = 67 + 45 * MyApp.qNum.value : _height : _height;
+    });
+  }
+
+  double _height = 52;
+  bool _isTouch = false;
+  List<Widget> listItems = [];
+  void _initlistItems() {
+    listItems.add(setTime(1));
+    listItems.add(setTime(2));
+    listItems.add(setTime(3));
+  }
+
+  void _changeHeight() {
+    setState(() {
+      _isTouch = _isTouch == false ? true : false;
+      _isTouch == false ? _height = 52 : _height = 67 + 45 * MyApp.qNum.value;
+    });
+  }
+
+  void _openTimePicker(BuildContext context, double n) {
+    BottomPicker.time(title: "Q$n").show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _initlistItems(); // 이거도 main으로 뺴야함
     return MaterialApp(
       theme: CustomThemeData.light,
       darkTheme: CustomThemeData.dark,
@@ -91,43 +131,87 @@ class _PersonalSettingState extends State<PersonalSetting> {
                           borderRadius: BorderRadius.circular(17),
                         ),
                       ),
-                      child: const Counter(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                              onPressed: _decrementCounter,
+                              icon: Image.asset('assets/minus.png')),
+                          AnimatedFlipCounter(
+                            value: MyApp.qNum.value,
+                            textStyle: const TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: _incrementCounter,
+                              icon: Image.asset('assets/plus.png')),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
             ),
             Center(
-              child: Container(
-                margin: const EdgeInsets.only(top: 19),
-                width: 330,
-                height: 52,
-                padding: const EdgeInsets.only(left: 19),
-                decoration: ShapeDecoration(
-                  color: MyApp.themeNotifier.value == ThemeMode.dark
-                      ? const Color(0xFF575F70)
-                      : Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(17),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      '푸시알림 시간',
-                      style: TextStyle(
-                        fontSize: 14,
-                        letterSpacing: 0.70,
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Image.asset('assets/rightarrow.png')),
-                  ],
+                child: AnimatedContainer(
+              margin: const EdgeInsets.only(top: 19),
+              width: 330,
+              height: _height,
+              duration: const Duration(milliseconds: 100),
+              padding: const EdgeInsets.only(left: 19),
+              decoration: ShapeDecoration(
+                color: MyApp.themeNotifier.value == ThemeMode.dark
+                    ? const Color(0xFF575F70)
+                    : Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(17),
                 ),
               ),
-            ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        '푸시알림 시간',
+                        style: TextStyle(
+                          fontSize: 14,
+                          letterSpacing: 0.70,
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: _changeHeight,
+                          icon: Image.asset('assets/rightarrow.png')),
+                    ],
+                  ),
+                  _isTouch == true
+                      ? Column(
+                          children: [
+                            Container(
+                              width: 330,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
+                                    color: MyApp.themeNotifier.value ==
+                                            ThemeMode.dark
+                                        ? const Color(0xFF61697C)
+                                        : const Color(0xFFF9F9F9),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: Column(children: listItems,),
+                            )
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            )),
             Container(
               margin: const EdgeInsets.only(top: 45),
               child: Column(
@@ -179,45 +263,11 @@ class _PersonalSettingState extends State<PersonalSetting> {
       ),
     );
   }
-}
 
-class Counter extends StatefulWidget {
-  const Counter({super.key});
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<Counter> {
-  void _incrementCounter() {
-    setState(() {
-      MyApp.qNum.value < 10 ? MyApp.qNum.value++ : MyApp.qNum.value;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      MyApp.qNum.value > 3 ? MyApp.qNum.value-- : MyApp.qNum.value;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        IconButton(
-            onPressed: _decrementCounter,
-            icon: Image.asset('assets/minus.png')),
-        AnimatedFlipCounter(
-          value: MyApp.qNum.value,
-          textStyle: const TextStyle(
-            fontSize: 30,
-          ),
-        ),
-        IconButton(
-            onPressed: _incrementCounter, icon: Image.asset('assets/plus.png')),
-      ],
+  Widget setTime(double n) {
+    return TextButton(
+        onPressed: () {_openTimePicker(context, n);},
+        child: Text("Q$n $context"),
     );
   }
 }

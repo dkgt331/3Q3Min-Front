@@ -40,6 +40,8 @@ dependencies:
   intl: ^0.18.0
   stock: ^1.0.1
   animated_flip_counter: ^0.2.6
+  bottom_picker: ^2.0.4
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_driver:

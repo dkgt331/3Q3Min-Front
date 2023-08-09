@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
 
   static final ValueNotifier<ThemeMode> themeNotifier =
   ValueNotifier(ThemeMode.light);
-  static final ValueNotifier<int> qNum = ValueNotifier(3);
+  static final ValueNotifier<double> qNum = ValueNotifier(3);
   // This widget is the root of your application.
   @override
     Widget build(BuildContext context) {
       return ValueListenableBuilder2(
         first: themeNotifier,
         second: qNum,
-        builder: (_, ThemeMode currentMode, int n, __) {
+        builder: (_, ThemeMode currentMode, double n, __) {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
@@ -74,15 +74,15 @@ class ValueListenableBuilder2 extends StatelessWidget {
   }) : super(key: key);
 
   final ValueListenable<ThemeMode> first;
-  final ValueListenable<int> second;
+  final ValueListenable<double> second;
   final Widget? child;
-  final Widget Function(BuildContext context, ThemeMode a, int b, Widget? child) builder;
+  final Widget Function(BuildContext context, ThemeMode a, double b, Widget? child) builder;
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
     valueListenable: first,
     builder: (_, a, __) {
-      return ValueListenableBuilder<int>(
+      return ValueListenableBuilder<double>(
         valueListenable: second,
         builder: (context, b, __) {
           return builder(context, a, b, child);
