@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
               curve: Cubic(1,1,1,1),
               duration: 6000,
               splash: SplashTweenAnimationBuilder(),
+              pageTransitionType: PageTransitionType.fade,
               nextScreen: HomeScreen(),
               backgroundColor: Color(0xff8EBBFF),
             ),
