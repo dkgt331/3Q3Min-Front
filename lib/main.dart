@@ -2,6 +2,7 @@ import 'package:application_3q3min/home/home_screen.dart';
 import 'package:application_3q3min/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:application_3q3min/tutorial/tutorial.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
               splashIconSize: double.infinity,
               pageTransitionType: PageTransitionType.fade,
               animationDuration: Duration(milliseconds: 500),
-              nextScreen: HomeScreen(),
+              nextScreen: Tutorial(),
               backgroundColor: Colors.transparent,
             ),
             // const HomeScreen(),
