@@ -1,4 +1,9 @@
+import 'package:application_3q3min/home/home_screen.dart';
+import 'package:application_3q3min/splash/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:application_3q3min/tutorial/tutorial.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'home/home_screen.dart';
 import 'login/login_screen.dart';
@@ -22,23 +27,33 @@ class _MyAppState extends State<MyApp> {
   bool isLoggedIn = false;
 
   @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: MyApp.themeNotifier,
-      builder: (_, ThemeMode currentMode, __) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData.dark(),
-          themeMode: currentMode,
-          home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
-        );
-      },
-    );
-  }
+    Widget build(BuildContext context) {
+      return ValueListenableBuilder(
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode currentMode, __) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData.dark(),
+            themeMode: currentMode,
+            home: AnimatedSplashScreen(
+              curve: Cubic(1,1,1,1),
+              duration: 6000,
+              splash: SplashTweenAnimationBuilder(),
+              splashIconSize: double.infinity,
+              pageTransitionType: PageTransitionType.fade,
+              animationDuration: Duration(milliseconds: 500),
+              nextScreen: Tutorial(),
+              backgroundColor: Colors.transparent,
+            ),
+            // const HomeScreen(),
+          );
+        },
+      );
+    }
 }
 
 class CustomThemeData {
