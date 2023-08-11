@@ -415,7 +415,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      if (isDragUp) {
+                        isDragUp = false;
+                        setState(() {});
+                      } else {
+                        Navigator.of(context).pop();
+                      }
                     },
                     child: Image.asset(
                       "assets/back_arrow.png",
