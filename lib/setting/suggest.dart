@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:application_3q3min/main.dart';
+import 'package:provider/provider.dart';
 
 class Suggest extends StatelessWidget {
   const Suggest({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       theme: CustomThemeData.light,
       darkTheme: CustomThemeData.dark,
-      themeMode: MyApp.themeNotifier.value,
+      themeMode: themeMode.themeNotifier,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +64,7 @@ class Suggest extends StatelessWidget {
                   width: 330,
                   height: 344,
                   decoration: ShapeDecoration(
-                    color: MyApp.themeNotifier.value == ThemeMode.dark
+                    color: themeMode.themeNotifier == ThemeMode.dark
                         ? const Color(0xFF575F70)
                         : Colors.white,
                     shape: RoundedRectangleBorder(
@@ -83,12 +85,14 @@ class Suggest extends StatelessWidget {
                       ),
                       Container(
                         width: 330,
-                        decoration: const ShapeDecoration(
+                        decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               width: 1,
                               strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Color(0xFFF9F9F9),
+                              color: themeMode.themeNotifier == ThemeMode.dark
+                                  ? const Color(0xFF61697C)
+                                  : const Color(0xFFF9F9F9),
                             ),
                           ),
                         ),

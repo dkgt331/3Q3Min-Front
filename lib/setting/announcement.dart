@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:application_3q3min/setting/suggest.dart';
 import 'package:application_3q3min/main.dart';
+import 'package:provider/provider.dart';
 
 class Announcement extends StatelessWidget {
   const Announcement({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       theme: CustomThemeData.light,
       darkTheme: CustomThemeData.dark,
-      themeMode: MyApp.themeNotifier.value,
+      themeMode: themeMode.themeNotifier,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,6 +88,7 @@ class ItemBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = Provider.of<ThemeNotifier>(context);
     return Container(
       margin: const EdgeInsets.only(top: 70),
       child: Column(
@@ -107,7 +110,7 @@ class ItemBox extends StatelessWidget {
               width: 330,
               height: height,
               decoration: ShapeDecoration(
-                color: MyApp.themeNotifier.value == ThemeMode.dark
+                color: themeMode.themeNotifier == ThemeMode.dark
                     ? const Color(0xFF575F70)
                     : Colors.white,
                 shape: RoundedRectangleBorder(
