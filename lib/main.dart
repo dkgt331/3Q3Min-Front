@@ -1,5 +1,4 @@
 import 'package:application_3q3min/home/home_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,28 +13,19 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static final ValueNotifier<ThemeMode> themeNotifier =
-      ValueNotifier(ThemeMode.light);
-  static final ValueNotifier<double> qNum = ValueNotifier(3);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder2(
-      first: themeNotifier,
-      second: qNum,
-      builder: (_, ThemeMode currentMode, double n, __) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData.dark(),
-          themeMode: currentMode,
-          home: const HomeScreen(),
-        );
-      },
+    var themeMode = Provider.of<ThemeNotifier>(context);
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeMode.themeNotifier,
+      home: const HomeScreen(),
     );
   }
 }
@@ -67,35 +57,6 @@ class CustomThemeData {
     fontWeight: FontWeight.w700,
     color: Colors.white.withOpacity(0.85),
   ));
-}
-
-class ValueListenableBuilder2 extends StatelessWidget {
-  const ValueListenableBuilder2({
-    required this.first,
-    required this.second,
-    Key? key,
-    required this.builder,
-    this.child,
-  }) : super(key: key);
-
-  final ValueListenable<ThemeMode> first;
-  final ValueListenable<double> second;
-  final Widget? child;
-  final Widget Function(
-      BuildContext context, ThemeMode a, double b, Widget? child) builder;
-
-  @override
-  Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
-        valueListenable: first,
-        builder: (_, a, __) {
-          return ValueListenableBuilder<double>(
-            valueListenable: second,
-            builder: (context, b, __) {
-              return builder(context, a, b, child);
-            },
-          );
-        },
-      );
 }
 
 class QNum with ChangeNotifier {
