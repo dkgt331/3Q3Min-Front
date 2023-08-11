@@ -1,6 +1,11 @@
 import 'package:application_3q3min/home/home_screen.dart';
+import 'package:application_3q3min/login/login_screen.dart';
+import 'package:application_3q3min/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:application_3q3min/tutorial/tutorial.dart';
+import 'package:page_transition/page_transition.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -11,9 +16,12 @@ void main() {
   ], child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
+  bool isLoggedIn = false;
+  bool isFirst = true;
+
   @override
   Widget build(BuildContext context) {
     var themeMode = Provider.of<ThemeNotifier>(context);
@@ -25,7 +33,21 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode.themeNotifier,
-      home: const HomeScreen(),
+      home: AnimatedSplashScreen(
+        curve: const Cubic(1, 1, 1, 1),
+        duration: 6000,
+        splash: const SplashTweenAnimationBuilder(),
+        splashIconSize: double.infinity,
+        pageTransitionType: PageTransitionType.fade,
+        animationDuration: const Duration(milliseconds: 500),
+        nextScreen: isFirst
+            ? const Tutorial()
+            : isLoggedIn
+                ? const HomeScreen()
+                : const LoginScreen(),
+        backgroundColor: Colors.transparent,
+      ),
+      // const HomeScreen(),
     );
   }
 }
