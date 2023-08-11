@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:application_3q3min/main.dart';
 import 'package:application_3q3min/setting/announcement.dart';
@@ -14,14 +15,15 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreen extends State<SettingScreen> {
-  var _isSwitched = MyApp.themeNotifier.value == ThemeMode.light ? false : true;
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = Provider.of<ThemeNotifier>(context);
+    var switched = themeMode.themeNotifier == ThemeMode.light ? false : true;
     return MaterialApp(
       theme: CustomThemeData.light,
       darkTheme: CustomThemeData.dark,
-      themeMode: MyApp.themeNotifier.value,
+      themeMode: themeMode.themeNotifier,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +92,7 @@ class _SettingScreen extends State<SettingScreen> {
                 height: 142,
                 margin: const EdgeInsets.fromLTRB(32, 28, 32, 0),
                 decoration: ShapeDecoration(
-                    color: _isSwitched
+                    color: switched
                         ? const Color(0xFF575F70)
                         : Colors.white,
                     shape: RoundedRectangleBorder(
@@ -213,13 +215,11 @@ class _SettingScreen extends State<SettingScreen> {
                       Container(
                         margin: const EdgeInsets.only(right: 53),
                         child: CustomSwitch(
-                          value: _isSwitched, // 다크 모드와 연결하기
+                          value: switched, // 다크 모드와 연결하기
                           onChanged: (value) {
                             setState(() {
-                              _isSwitched = value;
-                              MyApp.themeNotifier.value = _isSwitched
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light;
+                              switched = value;
+                              themeMode.themeChange();
                             });
                           },
                         ),

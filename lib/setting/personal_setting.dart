@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:application_3q3min/main.dart';
+import 'package:provider/provider.dart';
 
 class PersonalSetting extends StatefulWidget {
   const PersonalSetting({super.key});
@@ -12,51 +13,120 @@ class PersonalSetting extends StatefulWidget {
 
 class _PersonalSettingState extends State<PersonalSetting> {
   bool _isShortAnswer = false;
+
+  Widget setTime(double n) {
+    var qTime = Provider.of<QTime>(context, listen: false);
+    int index = n.toInt() - 1;
+    return TextButton(
+      onPressed: () {
+        _openTimePicker(context, n, qTime.timeList[index]);
+      },
+      child: Consumer<QTime>(builder: (context, qtime, child) {
+        return SizedBox(
+            width: 330,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Opacity(
+                  opacity: 0.6,
+                  child: Text("Q$n",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w700)),
+                ),
+                Container(
+                    width: 37,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                        qTime.timeList[index].hour <= 12
+                            ? "${qTime.timeList[index].hour}"
+                            : "${qTime.timeList[index].hour - 12}",
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700))),
+                const Text(":",
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+                Container(
+                    width: 37,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                        qTime.timeList[index].minute > 9
+                            ? "${qTime.timeList[index].minute}"
+                            : "0${qTime.timeList[index].minute}",
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w700))),
+                Text(qTime.timeList[index].hour < 12 ? 'AM' : 'PM',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700)),
+              ],
+            ));
+      }),
+    );
+  }
+
   void _incrementCounter() {
+    var qNum = Provider.of<QNum>(context, listen: false);
+    var qTime = Provider.of<QTime>(context, listen: false);
     setState(() {
-      MyApp.qNum.value < 10 ? MyApp.qNum.value++ : MyApp.qNum.value;
-      MyApp.qNum.value <= 10
-          ? listItems.add(setTime(MyApp.qNum.value))
-          : listItems;
-      MyApp.qNum.value <= 10 ? _isTouch ? _height = 67 + 45 * MyApp.qNum.value : _height : _height;
+      qNum.qNum < 10 ? qTime.addTime() : qNum.qNum;
+      qNum.qNum < 10 ? listItems.add(setTime(qNum.qNum + 1)) : listItems;
+      qNum.qNum < 10 ? qNum.increse() : qNum.qNum;
+      _isTouch ? _height = 67 + 48 * qNum.qNum : _height;
     });
   }
 
   void _decrementCounter() {
+    var qNum = Provider.of<QNum>(context, listen: false);
+    var qTime = Provider.of<QTime>(context, listen: false);
     setState(() {
-      MyApp.qNum.value > 3 ? MyApp.qNum.value-- : MyApp.qNum.value;
-      MyApp.qNum.value >= 3 ? listItems.removeLast() : listItems;
-      MyApp.qNum.value >= 3 ? _isTouch ? _height = 67 + 45 * MyApp.qNum.value : _height : _height;
+      qNum.qNum > 3 ? qTime.removeTime() : qNum.qNum;
+      qNum.qNum > 3 ? listItems.removeLast() : listItems;
+      qNum.qNum > 3 ? qNum.decrese() : qNum.qNum;
+      _isTouch ? _height = 67 + 48 * qNum.qNum : _height;
     });
   }
 
   double _height = 52;
   bool _isTouch = false;
   List<Widget> listItems = [];
-  void _initlistItems() {
-    listItems.add(setTime(1));
-    listItems.add(setTime(2));
-    listItems.add(setTime(3));
+
+  @override
+  void initState() {
+    var qNum = Provider.of<QNum>(context, listen: false);
+    super.initState();
+    for (int i = 1; i <= qNum.qNum; i++) {
+      listItems.add(setTime(i.toDouble()));
+    }
   }
 
   void _changeHeight() {
+    var qNum = Provider.of<QNum>(context, listen: false);
     setState(() {
       _isTouch = _isTouch == false ? true : false;
-      _isTouch == false ? _height = 52 : _height = 67 + 45 * MyApp.qNum.value;
+      _isTouch == false ? _height = 52 : _height = 67 + 45 * qNum.qNum;
     });
   }
 
-  void _openTimePicker(BuildContext context, double n) {
-    BottomPicker.time(title: "Q$n").show(context);
+  void _openTimePicker(BuildContext context, double n, DateTime init) {
+    var qTime = Provider.of<QTime>(context, listen: false);
+    int index = n.toInt() - 1;
+    BottomPicker.time(
+      title: "Q$n",
+      onSubmit: (time) {
+        qTime.changeTime(time, index);
+        //제출 버튼을 누르고 나면 text를 다시 랜더링해줘야 함
+      },
+      initialDateTime: init,
+    ).show(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    _initlistItems(); // 이거도 main으로 뺴야함
+    var themeMode = Provider.of<ThemeNotifier>(context);
+    var isShort = Provider.of<IsShort>(context);
+    var qNum = Provider.of<QNum>(context, listen: false);
     return MaterialApp(
       theme: CustomThemeData.light,
       darkTheme: CustomThemeData.dark,
-      themeMode: MyApp.themeNotifier.value,
+      themeMode: themeMode.themeNotifier,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +194,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
                       width: 330,
                       height: 78,
                       decoration: ShapeDecoration(
-                        color: MyApp.themeNotifier.value == ThemeMode.dark
+                        color: themeMode.themeNotifier == ThemeMode.dark
                             ? const Color(0xFF575F70)
                             : Colors.white,
                         shape: RoundedRectangleBorder(
@@ -138,7 +208,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
                               onPressed: _decrementCounter,
                               icon: Image.asset('assets/minus.png')),
                           AnimatedFlipCounter(
-                            value: MyApp.qNum.value,
+                            value: qNum.qNum,
                             textStyle: const TextStyle(
                               fontSize: 30,
                             ),
@@ -159,9 +229,8 @@ class _PersonalSettingState extends State<PersonalSetting> {
               width: 330,
               height: _height,
               duration: const Duration(milliseconds: 100),
-              padding: const EdgeInsets.only(left: 19),
               decoration: ShapeDecoration(
-                color: MyApp.themeNotifier.value == ThemeMode.dark
+                color: themeMode.themeNotifier == ThemeMode.dark
                     ? const Color(0xFF575F70)
                     : Colors.white,
                 shape: RoundedRectangleBorder(
@@ -173,11 +242,14 @@ class _PersonalSettingState extends State<PersonalSetting> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '푸시알림 시간',
-                        style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 0.70,
+                      Container(
+                        margin: const EdgeInsets.only(left: 19),
+                        child: const Text(
+                          '푸시알림 시간',
+                          style: TextStyle(
+                            fontSize: 14,
+                            letterSpacing: 0.70,
+                          ),
                         ),
                       ),
                       IconButton(
@@ -195,7 +267,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
                                   side: BorderSide(
                                     width: 1,
                                     strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: MyApp.themeNotifier.value ==
+                                    color: themeMode.themeNotifier ==
                                             ThemeMode.dark
                                         ? const Color(0xFF61697C)
                                         : const Color(0xFFF9F9F9),
@@ -204,7 +276,12 @@ class _PersonalSettingState extends State<PersonalSetting> {
                               ),
                             ),
                             SingleChildScrollView(
-                              child: Column(children: listItems,),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: listItems,
+                              ),
                             )
                           ],
                         )
@@ -233,7 +310,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
                       width: 330,
                       height: 100,
                       decoration: ShapeDecoration(
-                        color: MyApp.themeNotifier.value == ThemeMode.dark
+                        color: themeMode.themeNotifier == ThemeMode.dark
                             ? const Color(0xFF575F70)
                             : Colors.white,
                         shape: RoundedRectangleBorder(
@@ -246,9 +323,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
                           onChanged: (value) {
                             setState(() {
                               _isShortAnswer = value;
-                              // MyApp.themeNotifier.value = _isShortAnswer
-                              //     ? ThemeMode.dark
-                              //     : ThemeMode.light;
+                              isShort.isShortChange();
                             });
                           },
                         ),
@@ -261,13 +336,6 @@ class _PersonalSettingState extends State<PersonalSetting> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget setTime(double n) {
-    return TextButton(
-        onPressed: () {_openTimePicker(context, n);},
-        child: Text("Q$n $context"),
     );
   }
 }
@@ -301,6 +369,7 @@ class _CustomSwitchState extends State<CustomSwitch>
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = Provider.of<ThemeNotifier>(context);
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -321,7 +390,7 @@ class _CustomSwitchState extends State<CustomSwitch>
             decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17)),
-                color: MyApp.themeNotifier.value == ThemeMode.light
+                color: themeMode.themeNotifier == ThemeMode.light
                     ? const Color(0xFFCECECE)
                     : Colors.white.withOpacity(0.5)),
             child: Padding(
@@ -339,7 +408,7 @@ class _CustomSwitchState extends State<CustomSwitch>
                     decoration: ShapeDecoration(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13)),
-                      color: MyApp.themeNotifier.value == ThemeMode.light
+                      color: themeMode.themeNotifier == ThemeMode.light
                           ? const Color(0xFFF9F9F9)
                           : const Color(0xFF6A7386),
                     ),
@@ -354,16 +423,16 @@ class _CustomSwitchState extends State<CustomSwitch>
                         child: Center(
                             child: Text('선택형',
                                 style: TextStyle(
-                                  color: MyApp.themeNotifier.value ==
-                                          ThemeMode.light
-                                      ? _circleAnimation.value ==
-                                              Alignment.centerLeft
-                                          ? const Color(0xFF757575)
-                                          : const Color(0xFFF9F9F9)
-                                      : _circleAnimation.value ==
-                                              Alignment.centerLeft
-                                          ? Colors.white.withOpacity(0.9)
-                                          : Colors.black.withOpacity(0.5),
+                                  color:
+                                      themeMode.themeNotifier == ThemeMode.light
+                                          ? _circleAnimation.value ==
+                                                  Alignment.centerLeft
+                                              ? const Color(0xFF757575)
+                                              : const Color(0xFFF9F9F9)
+                                          : _circleAnimation.value ==
+                                                  Alignment.centerLeft
+                                              ? Colors.white.withOpacity(0.9)
+                                              : Colors.black.withOpacity(0.5),
                                   fontSize: 15,
                                 ))),
                       ),
@@ -372,16 +441,16 @@ class _CustomSwitchState extends State<CustomSwitch>
                         child: Center(
                             child: Text('단답형',
                                 style: TextStyle(
-                                  color: MyApp.themeNotifier.value ==
-                                          ThemeMode.light
-                                      ? _circleAnimation.value ==
-                                              Alignment.centerLeft
-                                          ? const Color(0xFFF9F9F9)
-                                          : const Color(0xFF757575)
-                                      : _circleAnimation.value ==
-                                              Alignment.centerLeft
-                                          ? Colors.black.withOpacity(0.5)
-                                          : Colors.white.withOpacity(0.9),
+                                  color:
+                                      themeMode.themeNotifier == ThemeMode.light
+                                          ? _circleAnimation.value ==
+                                                  Alignment.centerLeft
+                                              ? const Color(0xFFF9F9F9)
+                                              : const Color(0xFF757575)
+                                          : _circleAnimation.value ==
+                                                  Alignment.centerLeft
+                                              ? Colors.black.withOpacity(0.5)
+                                              : Colors.white.withOpacity(0.9),
                                   fontSize: 15,
                                 ))),
                       ),
