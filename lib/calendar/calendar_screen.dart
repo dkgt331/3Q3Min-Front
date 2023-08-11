@@ -1,3 +1,4 @@
+import 'package:application_3q3min/calendar/modify_answer_dialog.dart';
 import 'package:flutter/material.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -226,125 +227,167 @@ class _CalendarScreenState extends State<CalendarScreen> {
               if (isDragUp)
                 Column(
                   children: [
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height - 540) / 6,
-                    ),
-                    const Text(
-                      "Q. 오늘은 누구를 만나셨나요?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    const Text.rich(TextSpan(children: [
-                      TextSpan(
-                        text: "A. ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const ModifyAnswerDialog(
+                                  question: "오늘은 누구를 만나셨나요?",
+                                  answer: "지수와 예희",
+                                ));
+                      },
+                      child: Column(children: [
+                        SizedBox(
+                          height:
+                              (MediaQuery.of(context).size.height - 540) / 6,
                         ),
-                      ),
-                      TextSpan(
-                        text: "지수와 예희",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        const Text(
+                          "Q. 오늘은 누구를 만나셨나요?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      )
-                    ])),
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                        const SizedBox(
+                          height: 34,
+                        ),
+                        const Text.rich(TextSpan(children: [
+                          TextSpan(
+                            text: "A. ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "지수와 예희",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        ])),
+                        SizedBox(
+                          height:
+                              (MediaQuery.of(context).size.height - 540) / 6,
+                        ),
+                      ]),
                     ),
-                    // const Expanded(child: SizedBox()),
                     Container(
                       height: 0.5,
                       margin: const EdgeInsets.symmetric(horizontal: 30.0),
                       color: Colors.black.withOpacity(0.2),
                     ),
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height - 540) / 6,
-                    ),
-                    // const Expanded(child: SizedBox()),
-                    const Text(
-                      "Q. 아침에 무엇을 드셨나요?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    const Text.rich(TextSpan(children: [
-                      TextSpan(
-                        text: "A. ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const ModifyAnswerDialog(
+                                  question: "아침에 무엇을 드셨나요?",
+                                  answer: "오이냉국",
+                                ));
+                      },
+                      child: Column(children: [
+                        SizedBox(
+                          height:
+                              (MediaQuery.of(context).size.height - 540) / 6,
                         ),
-                      ),
-                      TextSpan(
-                        text: "오이냉국",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        // const Expanded(child: SizedBox()),
+                        const Text(
+                          "Q. 아침에 무엇을 드셨나요?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      )
-                    ])),
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height - 540) / 6,
+                        const SizedBox(
+                          height: 34,
+                        ),
+                        const Text.rich(TextSpan(children: [
+                          TextSpan(
+                            text: "A. ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "오이냉국",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        ])),
+                        SizedBox(
+                          height:
+                              (MediaQuery.of(context).size.height - 540) / 6,
+                        ),
+                      ]),
                     ),
-                    // const Expanded(child: SizedBox()),
                     Container(
                       height: 0.5,
                       margin: const EdgeInsets.symmetric(horizontal: 30.0),
                       color: Colors.black.withOpacity(0.2),
                     ),
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height - 540) / 6,
-                    ),
-                    // const Expanded(child: SizedBox()),
-                    const Text(
-                      "Q. 가장 여행가고 싶은 곳은?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    const Text.rich(TextSpan(children: [
-                      TextSpan(
-                        text: "A. ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const ModifyAnswerDialog(
+                                  question: "가장 여행가고 싶은 곳은?",
+                                  answer: "아이슬란드",
+                                ));
+                      },
+                      child: Column(children: [
+                        SizedBox(
+                          height:
+                              (MediaQuery.of(context).size.height - 540) / 6,
                         ),
-                      ),
-                      TextSpan(
-                        text: "아이슬란드",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        // const Expanded(child: SizedBox()),
+                        const Text(
+                          "Q. 가장 여행가고 싶은 곳은?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      )
-                    ])),
+                        const SizedBox(
+                          height: 34,
+                        ),
+                        const Text.rich(TextSpan(children: [
+                          TextSpan(
+                            text: "A. ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "아이슬란드",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        ])),
+                      ]),
+                    )
                   ],
                 ),
               if (!isDragUp)
