@@ -43,7 +43,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       opacity: 0.90,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 36),
-        height: 360,
+        height: 380,
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(17)),
             color: Colors.white),
