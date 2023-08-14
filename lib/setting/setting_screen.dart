@@ -1,3 +1,4 @@
+import 'package:application_3q3min/setting/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -200,7 +201,8 @@ class _SettingScreen extends State<SettingScreen> {
                         height: 37,
                         child: TextButton(
                             onPressed: () {
-                              //로그아웃 기능 구현
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const LogOut()));
                             },
                             child: const Text(
                               '로그아웃',
