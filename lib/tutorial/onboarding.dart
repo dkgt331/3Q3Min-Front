@@ -170,7 +170,13 @@ class _FadeSwitcherState extends State<FadeSwitcher> {
           ),
         ),
         Image(image: AssetImage('assets/bar.png')),
-        Image(image: AssetImage('assets/home_button.png')),
+        SizedBox(
+          width: 90,
+          height: 90,
+          child: Image(
+            image: AssetImage('assets/home_button.png'),
+          ),
+        ),
       ],
     );
   }
