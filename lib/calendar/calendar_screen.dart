@@ -64,7 +64,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 children: [
                   GestureDetector(
                       onTap: () {
-                        setDateList(year, month - 1);
+                        if (month == 1) {
+                          year = year - 1;
+                          month = 12;
+                        } else {
+                          month = month - 1;
+                        }
+                        setState(() {});
+
+                        setDateList(year, month);
                       },
                       child: Image.asset(
                         "assets/calendar_back_arrow.png",
@@ -82,7 +90,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   const Expanded(child: SizedBox()),
                   GestureDetector(
                       onTap: () {
-                        setDateList(year, month + 1);
+                        if (month == 12) {
+                          year = year + 1;
+                          month = 1;
+                        } else {
+                          month = month + 1;
+                        }
+                        setState(() {});
+
+                        setDateList(year, month);
                       },
                       child: Image.asset(
                         "assets/calendar_next_arrow.png",
