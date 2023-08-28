@@ -40,7 +40,8 @@ class _PersonalSettingState extends State<PersonalSetting> {
                         qTime.timeList[index].hour <= 12
                             ? "${qTime.timeList[index].hour}"
                             : "${qTime.timeList[index].hour - 12}",
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700))),
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w700))),
                 const Text(":",
                     style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
@@ -101,7 +102,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
     var qNum = Provider.of<QNum>(context, listen: false);
     setState(() {
       _isTouch = _isTouch == false ? true : false;
-      _isTouch == false ? _height = 52 : _height = 67 + 45 * qNum.qNum;
+      _isTouch == false ? _height = 52 : _height = 67 + 47 * qNum.qNum;
     });
   }
 
@@ -128,212 +129,218 @@ class _PersonalSettingState extends State<PersonalSetting> {
       darkTheme: CustomThemeData.dark,
       themeMode: themeMode.themeNotifier,
       home: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 상단
-            Container(
-              margin: const EdgeInsets.only(top: 67),
-              height: 44,
-              child: Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 41),
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Image.asset('assets/back.png')),
-                  ),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '개인설정',
-                      style: TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 1,
-                      ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 상단
+              Container(
+                margin: const EdgeInsets.only(top: 67),
+                height: 44,
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 41),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Image.asset('assets/back.png')),
                     ),
-                  )
-                ],
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '개인설정',
+                        style: TextStyle(
+                          fontSize: 20,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Center(
-              child: Container(
-                margin: const EdgeInsets.only(top: 31),
-                width: 321,
-                decoration: const ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 0.35,
-                      strokeAlign: BorderSide.strokeAlignCenter,
-                      color: Color(0x7F88B3F2),
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 31),
+                  width: 321,
+                  decoration: const ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.35,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Color(0x7F88B3F2),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 45),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 62),
-                    child: const Text(
-                      '질문 개수',
-                      style: TextStyle(
-                        fontSize: 14,
-                        letterSpacing: 0.70,
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      width: 330,
-                      height: 78,
-                      decoration: ShapeDecoration(
-                        color: themeMode.themeNotifier == ThemeMode.dark
-                            ? const Color(0xFF575F70)
-                            : Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17),
+              Container(
+                margin: const EdgeInsets.only(top: 45),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 62),
+                      child: const Text(
+                        '질문 개수',
+                        style: TextStyle(
+                          fontSize: 14,
+                          letterSpacing: 0.70,
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    ),
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 14),
+                        width: 330,
+                        height: 78,
+                        decoration: ShapeDecoration(
+                          color: themeMode.themeNotifier == ThemeMode.dark
+                              ? const Color(0xFF575F70)
+                              : Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(17),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                                onPressed: _decrementCounter,
+                                icon: Image.asset('assets/minus.png')),
+                            AnimatedFlipCounter(
+                              value: qNum.qNum,
+                              textStyle: const TextStyle(
+                                fontSize: 30,
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: _incrementCounter,
+                                icon: Image.asset('assets/plus.png')),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Center(
+                  child: AnimatedContainer(
+                margin: const EdgeInsets.only(top: 19),
+                width: 330,
+                height: _height,
+                duration: const Duration(milliseconds: 100),
+                decoration: ShapeDecoration(
+                  color: themeMode.themeNotifier == ThemeMode.dark
+                      ? const Color(0xFF575F70)
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                              onPressed: _decrementCounter,
-                              icon: Image.asset('assets/minus.png')),
-                          AnimatedFlipCounter(
-                            value: qNum.qNum,
-                            textStyle: const TextStyle(
-                              fontSize: 30,
+                          Container(
+                            margin: const EdgeInsets.only(left: 19),
+                            child: const Text(
+                              '푸시알림 시간',
+                              style: TextStyle(
+                                fontSize: 14,
+                                letterSpacing: 0.70,
+                              ),
                             ),
                           ),
                           IconButton(
-                              onPressed: _incrementCounter,
-                              icon: Image.asset('assets/plus.png')),
+                              onPressed: _changeHeight,
+                              icon: Image.asset('assets/rightarrow.png')),
                         ],
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Center(
-                child: AnimatedContainer(
-              margin: const EdgeInsets.only(top: 19),
-              width: 330,
-              height: _height,
-              duration: const Duration(milliseconds: 100),
-              decoration: ShapeDecoration(
-                color: themeMode.themeNotifier == ThemeMode.dark
-                    ? const Color(0xFF575F70)
-                    : Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 19),
-                        child: const Text(
-                          '푸시알림 시간',
-                          style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 0.70,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                          onPressed: _changeHeight,
-                          icon: Image.asset('assets/rightarrow.png')),
-                    ],
-                  ),
-                  _isTouch == true
-                      ? Column(
-                          children: [
-                            Container(
-                              width: 330,
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 1,
-                                    strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: themeMode.themeNotifier ==
-                                            ThemeMode.dark
-                                        ? const Color(0xFF61697C)
-                                        : const Color(0xFFF9F9F9),
+                      _isTouch == true
+                          ? Column(
+                            children: [
+                              Container(
+                                width: 330,
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 1,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: themeMode.themeNotifier ==
+                                              ThemeMode.dark
+                                          ? const Color(0xFF61697C)
+                                          : const Color(0xFFF9F9F9),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: listItems,
-                              ),
-                            )
-                          ],
-                        )
-                      : const SizedBox.shrink(),
-                ],
-              ),
-            )),
-            Container(
-              margin: const EdgeInsets.only(top: 45),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 62),
-                    child: const Text(
-                      '답변 유형',
-                      style: TextStyle(
-                        fontSize: 14,
-                        letterSpacing: 0.70,
-                      ),
-                    ),
+                              SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: listItems,
+                                ),
+                              )
+                            ],
+                          )
+                          : const SizedBox.shrink(),
+                    ],
                   ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      width: 330,
-                      height: 100,
-                      decoration: ShapeDecoration(
-                        color: themeMode.themeNotifier == ThemeMode.dark
-                            ? const Color(0xFF575F70)
-                            : Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17),
-                        ),
+                ),
+              )),
+              !_isTouch
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 45),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 62),
+                            child: const Text(
+                              '답변 유형',
+                              style: TextStyle(
+                                fontSize: 14,
+                                letterSpacing: 0.70,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 14),
+                              width: 330,
+                              height: 100,
+                              decoration: ShapeDecoration(
+                                color: themeMode.themeNotifier == ThemeMode.dark
+                                    ? const Color(0xFF575F70)
+                                    : Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(17),
+                                ),
+                              ),
+                              child: Center(
+                                child: CustomSwitch(
+                                  value: _isShortAnswer,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _isShortAnswer = value;
+                                      isShort.isShortChange();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      child: Center(
-                        child: CustomSwitch(
-                          value: _isShortAnswer,
-                          onChanged: (value) {
-                            setState(() {
-                              _isShortAnswer = value;
-                              isShort.isShortChange();
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+                    )
+                  : const SizedBox.shrink()
+            ],
+          ),
         ),
       ),
     );
