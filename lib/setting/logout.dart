@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:application_3q3min/login/login_screen.dart';
 import 'package:application_3q3min/main.dart';
 
@@ -7,6 +8,7 @@ class LogOut extends StatelessWidget {
   const LogOut({super.key});
 
   @override
+
   Widget build(BuildContext context) {
     var themeMode = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
@@ -48,6 +50,7 @@ class LogOut extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                     onPressed: () {
+                      GoogleSignIn().disconnect();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => const LoginScreen()),
                               (route) => false);
